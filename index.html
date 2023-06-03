@@ -9,9 +9,38 @@
 <body>
     <script>
         function getComputerChoice() {
-            return ['Rock', 'Paper', 'Scissors'][Math.floor(Math.random() * 3)]
+            return ['Rock', 'Paper', 'Scissors'][Math.floor(Math.random() * 3)];
         }
         
+        function capitalizeString(string) {
+            return string[0].toUpperCase() + string.slice(1);
+        }
+
+        function playRound(playerSelection, computerSelection) {
+            let lcPlayerSelection = playerSelection.trim().toLowerCase();
+            let lcComputerSelection = computerSelection.trim().toLowerCase()
+
+            // console.log("player selecton: " + lcPlayerSelection);
+            // console.log("computer selection: " + lcComputerSelection);
+
+            if (lcPlayerSelection === "rock" && lcComputerSelection === 'scissors') {
+                return "You Win! Rock beats Scissors";
+            } else if (lcPlayerSelection === 'scissors' && lcComputerSelection === 'paper') {
+                return "You Win! Scissors beat Paper";
+            } else if (lcPlayerSelection === 'paper' && lcComputerSelection === 'rock') {
+                return "You Win! Paper beats Rock";
+            } else if (lcPlayerSelection === "scissors" && lcComputerSelection === 'rock') {
+                return "You Lose! Rock beats Scissors";
+            } else if (lcPlayerSelection === 'paper' && lcComputerSelection === 'scissors') {
+                return "You Lose! Scissors beat Paper";
+            } else if (lcPlayerSelection === 'rock' && lcComputerSelection === 'paper') {
+                return "You Win! Paper beats Rock";
+            } else {
+                return `Tie! ${capitalizeString(lcPlayerSelection)} doesn't beat ` + 
+                `${capitalizeString(lcComputerSelection)}`
+            }
+        }
+        // console.log(playRound('paper', getComputerChoice()))
     </script>
 </body>
 </html>
