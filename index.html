@@ -5,8 +5,79 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Rock, Paper, Scissors</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            /* border: 1px solid black; */
+            font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            box-sizing: border-box;
+        }
+
+        body {
+            display: flex;
+            flex-direction: column;
+            /* margin: 0 auto; */
+            justify-content: center;
+            align-content: center;
+            height: 100vh;
+            background-color: rgb(199, 255, 255);
+        }
+
+        #content {
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            width: 400px;
+            background-color: gray;
+            border: 2px solid black;
+            border-radius: 5px;
+        }
+        .score {
+            text-align: center;
+            font-size: 24px;
+            background-color: rgb(220, 239, 255);
+            border-bottom: 2px solid black;
+            padding: 3px;
+        }
+        .output {
+            text-align: center;
+            border-top: 2px solid black;
+            background-color: rgb(255, 233, 204);
+            padding: 5px;
+            font-size: 17px;
+        }
+        .buttons {
+            display: flex;
+            justify-content: space-evenly;
+            gap: 10px;
+            padding: 10px;
+        }
+        button {
+            padding: 20px 8px;
+            background-color: lightgray;
+            border-radius: 5px;
+            width: 90px;
+            font-size: 20px;
+            flex: 1 1 auto;
+        }
+        img {
+            max-width: 35px;
+            height: auto;
+        }
+    </style>
 </head>
 <body>
+    <div id="content">
+        <div class="score">&nbsp;</div>
+        <div class="buttons">
+            <button id="rock">Rock</button>
+            <button id="paper">Paper</button>
+            <button id="scissors">Scissors</button>
+        </div>
+        <div class="output">&nbsp;</div>
+    </div>
+
     <script>
         function getComputerChoice() {
             return ['Rock', 'Paper', 'Scissors'][Math.floor(Math.random() * 3)];
@@ -20,28 +91,8 @@
             let lcPlayerSelection = playerSelection.trim().toLowerCase();
             let lcComputerSelection = computerSelection.trim().toLowerCase()
 
-            // console.log("player selecton: " + lcPlayerSelection);
-            // console.log("computer selection: " + lcComputerSelection);
-
             let capPlayerSelection = capitalizeString(lcPlayerSelection);
             let capComputerSelection = capitalizeString(lcComputerSelection);
-            
-            // if (lcPlayerSelection === "rock" && lcComputerSelection === 'scissors') {
-            //     return "You Win! Rock beats Scissors";
-            // } else if (lcPlayerSelection === 'scissors' && lcComputerSelection === 'paper') {
-            //     return "You Win! Scissors beat Paper";
-            // } else if (lcPlayerSelection === 'paper' && lcComputerSelection === 'rock') {
-            //     return "You Win! Paper beats Rock";
-            // } else if (lcPlayerSelection === "scissors" && lcComputerSelection === 'rock') {
-            //     return "You Lose! Rock beats Scissors";
-            // } else if (lcPlayerSelection === 'paper' && lcComputerSelection === 'scissors') {
-            //     return "You Lose! Scissors beat Paper";
-            // } else if (lcPlayerSelection === 'rock' && lcComputerSelection === 'paper') {
-            //     return "You Lose! Paper beats Rock";
-            // } else {
-            //     return `Tie! ${capitalizeString(lcPlayerSelection)} doesn't beat ` + 
-            //     `${capitalizeString(lcComputerSelection)}`;
-            // }
 
             switch(true) {
                 case lcPlayerSelection === "rock" && lcComputerSelection === 'scissors':
@@ -53,7 +104,7 @@
                 case lcPlayerSelection === 'rock' && lcComputerSelection === 'paper':
                     return `You Lose! ${capComputerSelection} ${('scissors' === lcComputerSelection) ? 'beat' : 'beats'} ${capPlayerSelection}`;
                 default:
-                    return `Tie! ${capPlayerSelection} doesn't beat ${capComputerSelection}`;
+                    return `Tie! ${capPlayerSelection} ${('scissors' === lcPlayerSelection) ? "don't" : "doesn't"} beat ${capComputerSelection}`;
             }
         }
 
@@ -62,30 +113,43 @@
         }
 
         function game() {
+
             let playerScore = 0;
             let computerScore = 0;
+            
+            const buttons = document.querySelectorAll('button');
 
-            for (let i = 0; i < 5; ++i) {
-                let userSelection = prompt('Enter "Rock", "Paper", or "Scissors"');
-                while (!(checkInputValidity(userSelection))) {
-                    userSelection = prompt('Wrong Input! Enter "Rock", "Paper", or "Scissors"');
-                }
-                
-                let output = playRound(userSelection, getComputerChoice());
+            buttons.forEach(button => {
+                button.addEventListener('click', (button) => {
+                    const selectedElementID = button.srcElement.id;
+                    const output = playRound(selectedElementID, getComputerChoice())
 
-                switch (true) {
-                    case output.startsWith('You Win!'):
-                        ++playerScore;
-                        break;
-                    case output.startsWith('You Lose!'):
-                        ++computerScore;
-                        break;
-                }
+                    switch (true) {
+                        case output.startsWith('You Win!'):
+                            ++playerScore;
+                            break;
+                        case output.startsWith('You Lose!'):
+                            ++computerScore;
+                            break;
+                    }
 
-                // game output
-                console.log(output);
-                console.log(`${playerScore} : ${computerScore}`);
-            }
+                    const score = document.querySelector('.score');
+                    const outputDiv = document.querySelector('.output')
+
+                    if (playerScore == 5) {
+                        score.textContent = "You Won!";
+                        outputDiv.textContent = output;
+                        playerScore = computerScore = 0;
+                    } else if (computerScore == 5) {
+                        score.textContent = "You lost!";
+                        outputDiv.textContent = output;
+                        playerScore = computerScore = 0;
+                    } else {
+                        score.textContent = `${playerScore} : ${computerScore}`;
+                        outputDiv.textContent = output;
+                    }
+                })
+            })
         }
         game()
     </script>
