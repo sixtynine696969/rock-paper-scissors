@@ -52,4 +52,5 @@ button {
     width: 90px;
     font-size: 20px;
     flex: 1 1 auto;
+    border-color: black;
 }
