@@ -13,7 +13,8 @@ body {
     justify-content: center;
     align-content: center;
     height: 100vh;
-    background-color: rgb(199, 255, 255);
+    /* background-color: rgb(199, 255, 255); */
+    background-image: linear-gradient(rgb(255, 233, 204), rgb(220, 239, 255));
 }
 
 #content {
