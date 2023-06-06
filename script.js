@@ -17,13 +17,13 @@ function playRound(playerSelection, computerSelection) {
         case lcPlayerSelection === "rock" && lcComputerSelection === 'scissors':
         case lcPlayerSelection === 'scissors' && lcComputerSelection === 'paper':
         case lcPlayerSelection === 'paper' && lcComputerSelection === 'rock':
-            return `You Win! ${capPlayerSelection} ${('scissors' === lcPlayerSelection) ? 'beat' : 'beats'} ${capComputerSelection}`;
+            return `You Win! ${capPlayerSelection} ${('scissors' === lcPlayerSelection) ? 'beat' : 'beats'} ${capComputerSelection}.`;
         case lcPlayerSelection === "scissors" && lcComputerSelection === 'rock':
         case lcPlayerSelection === 'paper' && lcComputerSelection === 'scissors':
         case lcPlayerSelection === 'rock' && lcComputerSelection === 'paper':
-            return `You Lose! ${capComputerSelection} ${('scissors' === lcComputerSelection) ? 'beat' : 'beats'} ${capPlayerSelection}`;
+            return `You Lose! ${capComputerSelection} ${('scissors' === lcComputerSelection) ? 'beat' : 'beats'} ${capPlayerSelection}.`;
         default:
-            return `Tie! ${capPlayerSelection} ${('scissors' === lcPlayerSelection) ? "don't" : "doesn't"} beat ${capComputerSelection}`;
+            return `Tie! ${capPlayerSelection} ${('scissors' === lcPlayerSelection) ? "don't" : "doesn't"} beat ${capComputerSelection}.`;
     }
 }
 
