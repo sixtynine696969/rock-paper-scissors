@@ -37,10 +37,12 @@ function game() {
     let computerScore = 0;
     
     const buttons = document.querySelectorAll('button');
+    const score = document.querySelector('.score');
+    const outputDiv = document.querySelector('.output')
 
     buttons.forEach(button => {
         button.addEventListener('click', (button) => {
-            const selectedElementID = button.srcElement.id;
+            const selectedElementID = button.target.id;
             const output = playRound(selectedElementID, getComputerChoice())
 
             switch (true) {
@@ -52,20 +54,22 @@ function game() {
                     break;
             }
 
-            const score = document.querySelector('.score');
-            const outputDiv = document.querySelector('.output')
-
             if (playerScore == 5) {
                 score.textContent = "You Won!";
+                score.style.backgroundColor = "rgb(167, 255, 164)";
+
                 outputDiv.textContent = output;
                 playerScore = computerScore = 0;
             } else if (computerScore == 5) {
                 score.textContent = "You lost!";
+                score.style.backgroundColor = "rgb(255, 148, 148)";
+
                 outputDiv.textContent = output;
                 playerScore = computerScore = 0;
             } else {
                 score.textContent = `${playerScore} : ${computerScore}`;
                 outputDiv.textContent = output;
+                score.style.backgroundColor = "";
             }
         })
     })
